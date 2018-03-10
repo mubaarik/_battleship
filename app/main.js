@@ -28,7 +28,7 @@ Leap.loop({ hand: function(hand) {
   // Use the hand data to control the cursor's screen position
   //left: hand.screenPosition()[0];
   //bottom: hand.screenPosition()[1];
-  var cursorPosition = [45,88];
+  var cursorPosition = [200,200];
 
   //var cursorPosition = [left,bottom];
   //console.log(cursorPosition);
