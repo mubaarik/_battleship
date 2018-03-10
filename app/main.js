@@ -28,18 +28,21 @@ Leap.loop({ hand: function(hand) {
   // Use the hand data to control the cursor's screen position
   left: hand.screenPosition()[0];
   bottom: hand.screenPosition()[1];
-  var cursorPosition = [left,bottom];
-  console.log(cursorPosition);
-  cursor.setScreenPosition(cursorPosition);
+  var cursorPosition = [45,88];
+
+  //var cursorPosition = [left,bottom];
+  //console.log(cursorPosition);
+  //cursor.setScreenPosition(cursorPosition);
 
   // TODO: 4.1
   // Get the tile that the player is currently selecting, and highlight it
   //selectedTile = ?
-  var selectedTile = getIntersectingTile(cursorPosition);
-  var color = '#00ff00';
-  if(!(selectedTile==false)){
-    highlightTile(position, color);
-  }
+
+  //var selectedTile = getIntersectingTile(cursorPosition);
+  //var color = '#00ff00';
+  //if(!(selectedTile==false)){
+  //  highlightTile(position, color);
+  //}
 
   // SETUP mode
   if (gameState.get('state') == 'setup') {
