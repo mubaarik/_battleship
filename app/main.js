@@ -26,8 +26,8 @@ Leap.loop({ hand: function(hand) {
 
   // TODO: 4.1, Moving the cursor with Leap data
   // Use the hand data to control the cursor's screen position
-  left: hand.screenPosition()[0]
-  bottom: hand.screenPosition()[1]
+  left: hand.screenPosition()[0];
+  bottom: hand.screenPosition()[1];
   var cursorPosition = [left,bottom];
   console.log(cursorPosition);
   cursor.setScreenPosition(cursorPosition);
@@ -114,9 +114,9 @@ Leap.loop({ hand: function(hand) {
 
 // processSpeech(transcript)
 //  Is called anytime speech is recognized by the Web Speech API
-// Input: 
+// Input:
 //    transcript, a string of possibly multiple words that were recognized
-// Output: 
+// Output:
 //    processed, a boolean indicating whether the system reacted to the speech or not
 var processSpeech = function(transcript) {
   // Helper function to detect if any commands appear in a string
