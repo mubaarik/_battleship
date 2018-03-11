@@ -26,23 +26,26 @@ Leap.loop({ hand: function(hand) {
 
   // TODO: 4.1, Moving the cursor with Leap data
   // Use the hand data to control the cursor's screen position
-  //left: hand.screenPosition()[0];
-  //bottom: hand.screenPosition()[1];
-  var cursorPosition = [200,200];
+  var offsetDown = 400;
+  var left = hand.screenPosition()[0];
+  var bottom = hand.screenPosition()[1]+offsetDown;
+  var cursorPosition = [left,bottom];
 
   //var cursorPosition = [left,bottom];
-  //console.log(cursorPosition);
+  //console.log(cursorPosition[0]);
   cursor.setScreenPosition(cursorPosition);
 
   // TODO: 4.1
   // Get the tile that the player is currently selecting, and highlight it
   //selectedTile = ?
 
-  //var selectedTile = getIntersectingTile(cursorPosition);
-  //var color = '#00ff00';
-  //if(!(selectedTile==false)){
-  //  highlightTile(position, color);
-  //}
+  var selectedTile = getIntersectingTile(cursorPosition);
+  var color = Colors.RED;
+  if(!(selectedTile==false)){
+    //position: {row: cursorPosition[0], col: cursorPosition[1]};
+    highlightTile(selectedTile, color);
+    //console.log(cursorPosition);
+  }
 
   // SETUP mode
   if (gameState.get('state') == 'setup') {
@@ -50,24 +53,42 @@ Leap.loop({ hand: function(hand) {
     // TODO: 4.2, Deploying ships
     //  Enable the player to grab, move, rotate, and drop ships to deploy them
 
+    //////////////////
+    hover = getIntersectingShipAndOffset(cursorPosition);
+    if(hover!=false){
+    ship = hover.ship;
+    shipOffset  = hover.offset;
+  }
+    //////////////////
+
+
+
+
     // First, determine if grabbing pose or not
-    isGrabbing = false;
+    isGrabbing = (hand.grabStrength>=.75);
 
     // Grabbing, but no selected ship yet. Look for one.
     // TODO: Update grabbedShip/grabbedOffset if the user is hovering over a ship
     if (!grabbedShip && isGrabbing) {
+      grabbedShip=true;
     }
 
     // Has selected a ship and is still holding it
     // TODO: Move the ship
     else if (grabbedShip && isGrabbing) {
-      grabbedShip.setScreenPosition([0,0]);
-      grabbedShip.setScreenRotation(0);
+      //ship_pose = [left+shipOffset[0],bottom+shipOffset[1]];
+      console.log("left: ",left);
+      console.log("ship_left: ",shipOffset[0]);
+      console.log("bottom: ",bottom);
+      console.log("ship_bottom: ",shipOffset[1]);
+      ship.setScreenPosition([left-shipOffset[0],bottom-shipOffset[1]]);
+      ship.setScreenRotation(-hand.roll());
     }
 
     // Finished moving a ship. Release it, and try placing it.
     // TODO: Try placing the ship on the board and release the ship
     else if (grabbedShip && !isGrabbing) {
+      grabbedShip=false;
     }
   }
 
@@ -135,7 +156,8 @@ var processSpeech = function(transcript) {
   if (gameState.get('state') == 'setup') {
     // TODO: 4.3, Starting the game with speech
     // Detect the 'start' command, and start the game if it was said
-    if (false) {
+    start = userSaid(transcript,'start');
+    if (start) {
       gameState.startGame();
       processed = true;
     }
