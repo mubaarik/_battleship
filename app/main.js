@@ -156,7 +156,7 @@ var processSpeech = function(transcript) {
   if (gameState.get('state') == 'setup') {
     // TODO: 4.3, Starting the game with speech
     // Detect the 'start' command, and start the game if it was said
-    start = userSaid(transcript,'start');
+    start = userSaid(transcript,['start']);
     if (start) {
       gameState.startGame();
       processed = true;
@@ -167,7 +167,7 @@ var processSpeech = function(transcript) {
     if (gameState.isPlayerTurn()) {
       // TODO: 4.4, Player's turn
       // Detect the 'fire' command, and register the shot if it was said
-      fire = userSaid(transcript,'fire');
+      fire = userSaid(transcript,['fire']);
       if (fire) {
         registerPlayerShot();
 
@@ -195,9 +195,11 @@ var processSpeech = function(transcript) {
 // Generate CPU speech feedback when player takes a shot
 var registerPlayerShot = function() {
   // TODO: CPU should respond if the shot was off-board
-  if (!selectedTile) {
-  }
+  cpuBoard.fireShot(shot);
 
+  if (!selectedTile) {
+    generateSpeech("Not a board!");
+  }
   // If aiming at a tile, register the player's shot
   else {
     var shot = new Shot({position: selectedTile});
@@ -209,21 +211,29 @@ var registerPlayerShot = function() {
     // TODO: Generate CPU feedback in three cases
     // Game over
     if (result.isGameOver) {
+      generateSpeech("Game over!");
       gameState.endGame("player");
       return;
     }
     // Sunk ship
     else if (result.sunkShip) {
+      generateSpeech("You sunk my ship fucker!");
       var shipName = result.sunkShip.get('type');
     }
     // Hit or miss
     else {
       var isHit = result.shot.get('isHit');
+      if(isHit){
+        generateSpeech("ouch! You're mean!");
+      }
+      else{
+        generateSpeech("Miss! HAHAHAHA!");
+      }
     }
 
     if (!result.isGameOver) {
       // TODO: Uncomment nextTurn to move onto the CPU's turn
-      // nextTurn();
+      //nextTurn();
     }
   }
 };
