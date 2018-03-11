@@ -167,7 +167,8 @@ var processSpeech = function(transcript) {
     if (gameState.isPlayerTurn()) {
       // TODO: 4.4, Player's turn
       // Detect the 'fire' command, and register the shot if it was said
-      if (false) {
+      fire = userSaid(transcript,'fire');
+      if (fire) {
         registerPlayerShot();
 
         processed = true;
