@@ -199,9 +199,11 @@ var registerPlayerShot = function() {
 
   if (!selectedTile) {
     generateSpeech("Not a board!");
+    console.log('selected another tiles!');
   }
   // If aiming at a tile, register the player's shot
   else {
+    console.log('selected the title');
     var shot = new Shot({position: selectedTile});
     var result = cpuBoard.fireShot(shot);
 
