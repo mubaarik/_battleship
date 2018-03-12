@@ -169,7 +169,7 @@ var processSpeech = function(transcript) {
       generateSpeech(spch);
       spch  = "IF you are here, I guess you're ready to battle!";
       generateSpeech(spch);
-      spch  = "Set yourself up and let me know when you're ready to go";
+      spch  = "when you're ready to go, point to the tile you wish to fire on and say fire clearly";
       generateSpeech(spch);
       gameState.startGame();
       processed = true;
