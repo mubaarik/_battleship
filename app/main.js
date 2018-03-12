@@ -54,18 +54,24 @@ Leap.loop({ hand: function(hand) {
     //  Enable the player to grab, move, rotate, and drop ships to deploy them
 
     //////////////////
+    var hover=false;
+    if(!isGrabbing){
     hover = getIntersectingShipAndOffset(cursorPosition);
+  }
     if(hover!=false){
     ship = hover.ship;
     shipOffset  = hover.offset;
   }
+
     //////////////////
 
 
 
 
     // First, determine if grabbing pose or not
-    isGrabbing = (hand.grabStrength>=.75);
+    //if(!(isGrabbing)){
+    isGrabbing = (hand.grabStrength>=.85);
+  //}
 
     // Grabbing, but no selected ship yet. Look for one.
     // TODO: Update grabbedShip/grabbedOffset if the user is hovering over a ship
@@ -77,10 +83,10 @@ Leap.loop({ hand: function(hand) {
     // TODO: Move the ship
     else if (grabbedShip && isGrabbing) {
       //ship_pose = [left+shipOffset[0],bottom+shipOffset[1]];
-      console.log("left: ",left);
-      console.log("ship_left: ",shipOffset[0]);
-      console.log("bottom: ",bottom);
-      console.log("ship_bottom: ",shipOffset[1]);
+      // console.log("left: ",left);
+      // console.log("ship_left: ",shipOffset[0]);
+      // console.log("bottom: ",bottom);
+      // console.log("ship_bottom: ",shipOffset[1]);
       ship.setScreenPosition([left-shipOffset[0],bottom-shipOffset[1]]);
       ship.setScreenRotation(-hand.roll());
     }
@@ -263,16 +269,30 @@ var registerCpuShot = function(playerResponse) {
 
   // NOTE: Here we are using the actual result of the shot, rather than the player's response
   // In 4.6, you may experiment with the CPU's response when the player is not being truthful!
+  var isTrueFul = function(expected){
+    var match = false;
+    var resp = playerResponse.toLowerCase();
+    if (!resp.includes(expected)){
+      var speech  = "You said "+playerResponse+", which is not true.";
+      generateSpeech(speech);
+    }
+
+  }
 
   // TODO: Generate CPU feedback in three cases
   // Game over
+  var expected = "hit";
   if (result.isGameOver) {
+    expected = "game over";
+    isTrueFul(expected);
     generateSpeech("See you later!");
     gameState.endGame("cpu");
     return;
   }
   // Sunk ship
   else if (result.sunkShip) {
+    expected="sunk";
+    isTrueFul(expected);
     generateSpeech('Rest in Piece!');
     var shipName = result.sunkShip.get('type');
   }
@@ -280,9 +300,12 @@ var registerCpuShot = function(playerResponse) {
   else {
     var isHit = result.shot.get('isHit');
     if (isHit){
+      isTrueFul(expected);
       generateSpeech('Yay!Yay!');
     }
     else{
+      expected = "miss";
+      isTrueFul(expected);
       generateSpeech('stop this madness!');
     }
   }
