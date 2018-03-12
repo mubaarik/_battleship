@@ -165,6 +165,12 @@ var processSpeech = function(transcript) {
     // Detect the 'start' command, and start the game if it was said
     start = userSaid(transcript,['start']);
     if (start) {
+      spch  = "Welcome to battleship! Just to warn you, you could quickly go down the drain.";
+      generateSpeech(spch);
+      spch  = "IF you are here, I guess you're ready to battle!";
+      generateSpeech(spch);
+      spch  = "Set yourself up and let me know when you're ready to go";
+      generateSpeech(spch);
       gameState.startGame();
       processed = true;
     }
@@ -172,8 +178,10 @@ var processSpeech = function(transcript) {
 
   else if (gameState.get('state') == 'playing') {
     if (gameState.isPlayerTurn()) {
+      generateSpeech("it is your turn, do your best hitting empty spaces");
       // TODO: 4.4, Player's turn
       // Detect the 'fire' command, and register the shot if it was said
+
       fire = userSaid(transcript,['fire']);
       if (fire) {
         registerPlayerShot();
@@ -224,17 +232,17 @@ var registerPlayerShot = function() {
     }
     // Sunk ship
     else if (result.sunkShip) {
-      generateSpeech("You sunk my ship sucker!");
+      generateSpeech("I lost a ship! Who cares! Monsters don't need weapons to survive!");
       var shipName = result.sunkShip.get('type');
     }
     // Hit or miss
     else {
       var isHit = result.shot.get('isHit');
       if(isHit){
-        generateSpeech("ouch! You're mean!");
+        generateSpeech("ouch! You got me!");
       }
       else{
-        generateSpeech("Miss! HAHAHAHA!");
+        generateSpeech("Miss! HAHAHAHAHHAHA HAHAHHAHAHAHAHAHA HAHAHAHAHAHAHAHHA HHAHAHAHAHAHAHAHAHAHAHAHAHHAHAHAHA!");
       }
     }
 
@@ -274,7 +282,7 @@ var registerCpuShot = function(playerResponse) {
     var match = false;
     var resp = playerResponse.toLowerCase();
     if (!resp.includes(expected)){
-      var speech  = "You said "+playerResponse+", which is not true.";
+      var speech  = "This is not a "+playerResponse+". This is a "+expected+" open your eyes!";
       generateSpeech(speech);
     }
 
@@ -286,7 +294,7 @@ var registerCpuShot = function(playerResponse) {
   if (result.isGameOver) {
     expected = "game over";
     isTrueFul(expected);
-    generateSpeech("See you later!");
+    generateSpeech("See you later loser!");
     gameState.endGame("cpu");
     return;
   }
