@@ -246,6 +246,8 @@ var generateCpuShot = function() {
   var tile = cpuShot.get('position');
   var rowName = ROWNAMES[tile.row]; // e.g. "A"
   var colName = COLNAMES[tile.col]; // e.g. "5"
+  generateSpeech("Fire at "+rowName+colName+'!');
+  blinkTile(tile);
 
   // TODO: Generate speech and visual cues for CPU shot
 };
@@ -264,23 +266,23 @@ var registerCpuShot = function(playerResponse) {
   // TODO: Generate CPU feedback in three cases
   // Game over
   if (result.isGameOver) {
-    generateSpeech("Game over!! See you later!");
+    generateSpeech("See you later!");
     gameState.endGame("cpu");
     return;
   }
   // Sunk ship
   else if (result.sunkShip) {
-    generateSpeech('You sunk my ship!!');
+    generateSpeech('Rest in Piece!');
     var shipName = result.sunkShip.get('type');
   }
   // Hit or miss
   else {
     var isHit = result.shot.get('isHit');
     if (isHit){
-      generateSpeech('hit');
+      generateSpeech('Yay!Yay!');
     }
     else{
-      generateSpeech('miss');
+      generateSpeech('stop this madness!');
     }
   }
 
