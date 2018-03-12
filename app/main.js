@@ -195,7 +195,7 @@ var processSpeech = function(transcript) {
 // Generate CPU speech feedback when player takes a shot
 var registerPlayerShot = function() {
   // TODO: CPU should respond if the shot was off-board
-  cpuBoard.fireShot(shot);
+  //cpuBoard.fireShot(shot);
 
   if (!selectedTile) {
     generateSpeech("Not a board!");
