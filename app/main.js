@@ -163,7 +163,7 @@ var processSpeech = function(transcript) {
   if (gameState.get('state') == 'setup') {
     // TODO: 4.3, Starting the game with speech
     // Detect the 'start' command, and start the game if it was said
-    start = userSaid(transcript,['start']);
+    var start = userSaid(transcript,['start']);
     if (start) {
       spch  = "Welcome to battleship! Just to warn you, you could quickly go down the drain.";
       generateSpeech(spch);
@@ -182,7 +182,7 @@ var processSpeech = function(transcript) {
       // TODO: 4.4, Player's turn
       // Detect the 'fire' command, and register the shot if it was said
 
-      fire = userSaid(transcript,['fire']);
+      var fire = userSaid(transcript,['fire']);
       if (fire) {
         registerPlayerShot();
 
@@ -282,7 +282,7 @@ var registerCpuShot = function(playerResponse) {
     var match = false;
     var resp = playerResponse.toLowerCase();
     if (!resp.includes(expected)){
-      var speech  = "This is not a "+playerResponse+". This is a "+expected+" open your eyes!";
+      var speech  = "This is not a "+playerResponse+". This is a "+expected+". open your eyes!";
       generateSpeech(speech);
     }
 
