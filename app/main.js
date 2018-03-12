@@ -175,10 +175,10 @@ var processSpeech = function(transcript) {
       processed = true;
     }
   }
-
+  
   else if (gameState.get('state') == 'playing') {
     if (gameState.isPlayerTurn()) {
-      generateSpeech("it is your turn, do your best hitting empty spaces");
+      //generateSpeech("it is your turn, do your best hitting empty spaces");
       // TODO: 4.4, Player's turn
       // Detect the 'fire' command, and register the shot if it was said
 
