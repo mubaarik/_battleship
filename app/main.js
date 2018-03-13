@@ -69,24 +69,17 @@ Leap.loop({ hand: function(hand) {
 
 
     // First, determine if grabbing pose or not
-    //if(!(isGrabbing)){
+
     isGrabbing = (hand.grabStrength>=.85);
-  //}
 
     // Grabbing, but no selected ship yet. Look for one.
-    // TODO: Update grabbedShip/grabbedOffset if the user is hovering over a ship
+    // Update grabbedShip/grabbedOffset if the user is hovering over a ship
     if (!grabbedShip && isGrabbing) {
       grabbedShip=true;
     }
 
     // Has selected a ship and is still holding it
-    // TODO: Move the ship
     else if (grabbedShip && isGrabbing) {
-      //ship_pose = [left+shipOffset[0],bottom+shipOffset[1]];
-      // console.log("left: ",left);
-      // console.log("ship_left: ",shipOffset[0]);
-      // console.log("bottom: ",bottom);
-      // console.log("ship_bottom: ",shipOffset[1]);
       ship.setScreenPosition([left-shipOffset[0],bottom-shipOffset[1]]);
       ship.setScreenRotation(-hand.roll());
     }
@@ -164,14 +157,15 @@ var processSpeech = function(transcript) {
     // TODO: 4.3, Starting the game with speech
     // Detect the 'start' command, and start the game if it was said
     var start = userSaid(transcript,['start']);
-    spch  = "Welcome to battleship! Just to warn you, you could quickly go down the drain.";
-    generateSpeech(spch);
-    spch  = "To setup, please place your ship on the board by grabbing, dragging and dropping! When you're happy with your placement, please say START!";
-    generateSpeech(spch);
-    spch  = "Keep in mind, if you don't place your ship, it will be on my ship and I will destroy you early!";
-    generateSpeech(spch);
+    
     if (start) {
-      spch  = "IF you are here, I guess you're ready to battle!";
+      spch  = "Welcome to battleship! Just to warn you, you could quickly go down the drain.";
+      generateSpeech(spch);
+      spch  = "To setup, please place your ship on the board by grabbing, dragging and dropping! When you're happy with your placement, please say START!";
+      generateSpeech(spch);
+      spch  = "Keep in mind, if you don't place your ship, it will be on my ship and I will destroy you early!";
+      generateSpeech(spch);
+      spch  = "To go back to the setup, please refresh the page!";
       generateSpeech(spch);
       spch  = "when you're ready to go, point to the tile you wish to fire on, and clearly say fire";
       generateSpeech(spch);
@@ -184,7 +178,6 @@ var processSpeech = function(transcript) {
   
   else if (gameState.get('state') == 'playing') {
     if (gameState.isPlayerTurn()) {
-      //generateSpeech("it is your turn, do your best hitting empty spaces");
       // 4.4, Player's turn
       // Detect the 'fire' command, and register the shot if it was said
 
@@ -326,7 +319,7 @@ var registerCpuShot = function(playerResponse) {
   }
 
   if (!result.isGameOver) {
-    // TODO: Uncomment nextTurn to move onto the player's next turn
+    // nextTurn to move onto the player's next turn
     nextTurn();
   }
 };
