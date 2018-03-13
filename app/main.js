@@ -317,12 +317,16 @@ var registerCpuShot = function(playerResponse) {
     var isHit = result.shot.get('isHit');
     if (isHit){
       isTrueFul(expected);
-      generateSpeech('Yay!Yay!');
+      var words = ["Got it!","Not surprised!", "Routine!", "All day!", "You're going down!","Like the ranger do!"];
+      var item = words[Math.floor(Math.random()*words.length)];
+      generateSpeech('Yay!Yay! '+item);
     }
     else{
       expected = "miss";
       isTrueFul(expected);
-      generateSpeech('stop this madness!');
+      var words = ["Next time!","You got lucky!", "I am going easy on you!", "I miss fired!", "You must be releived!","I can't believe it!"];
+      var item = words[Math.floor(Math.random()*words.length)];
+      generateSpeech(item);
     }
   }
 
