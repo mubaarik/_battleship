@@ -225,7 +225,9 @@ var registerPlayerShot = function() {
     // TODO: Generate CPU feedback in three cases
     // Game over
     if (result.isGameOver) {
-      generateSpeech("Game over!");
+      var words = ["Bye Bye!", "See you later!", "Go home!", "Nice game!"];
+        var item = words[Math.floor(Math.random()*words.length)];
+      generateSpeech("Game over! "+item);
       gameState.endGame("player");
       return;
     }
@@ -238,10 +240,14 @@ var registerPlayerShot = function() {
     else {
       var isHit = result.shot.get('isHit');
       if(isHit){
-        generateSpeech("ouch! You got me!");
+        var words = ["You're mean!", "Surprised!", "Wow!", "I am scared!"];
+        var item = words[Math.floor(Math.random()*words.length)];
+        generateSpeech("ouch! "+item);
       }
       else{
-        generateSpeech("Miss! HAHAHAHAHHAHA HAHAHHAHAHAHAHAHA HAHAHAHAHAHAHAHHA HHAHAHAHAHAHAHAHAHAHAHAHAHHAHAHAHA!");
+        var words = ["Not surprised!","You're not multimodal enough!", "Remember, this is a coordination game!", "Nice try!", "You're wasting my time!","HAHAHAHA!"];
+        var item = words[Math.floor(Math.random()*words.length)];
+        generateSpeech("Miss! "+item);
       }
     }
 
@@ -281,7 +287,9 @@ var registerCpuShot = function(playerResponse) {
     var match = false;
     var resp = playerResponse.toLowerCase();
     if (!resp.includes(expected)){
-      var speech  = "This is not a "+playerResponse+". This is a "+expected+". open your eyes!";
+      var words = ["Please go see an eye doctor!", "Stop lying!", "Nice try loser!", "Open your eyes!"];
+      var item = words[Math.floor(Math.random()*words.length)];
+      var speech  = "This is not a "+playerResponse+". This is a "+expected+". "+item;
       generateSpeech(speech);
     }
 
