@@ -164,13 +164,19 @@ var processSpeech = function(transcript) {
     // TODO: 4.3, Starting the game with speech
     // Detect the 'start' command, and start the game if it was said
     var start = userSaid(transcript,['start']);
+    spch  = "Welcome to battleship! Just to warn you, you could quickly go down the drain.";
+    generateSpeech(spch);
+    spch  = "To setup, please place your ship on the board by grabbing, dragging and dropping! When you're happy with your placement, please say START!";
+    generateSpeech(spch);
+    spch  = "Keep in mind, if you don't place your ship, it will be on my ship and I will destroy you early!";
+    generateSpeech(spch);
     if (start) {
-      spch  = "Welcome to battleship! Just to warn you, you could quickly go down the drain.";
-      generateSpeech(spch);
       spch  = "IF you are here, I guess you're ready to battle!";
       generateSpeech(spch);
-      spch  = "when you're ready to go, point to the tile you wish to fire on and say fire clearly";
+      spch  = "when you're ready to go, point to the tile you wish to fire on, and clearly say fire";
       generateSpeech(spch);
+     
+
       gameState.startGame();
       processed = true;
     }
@@ -179,7 +185,7 @@ var processSpeech = function(transcript) {
   else if (gameState.get('state') == 'playing') {
     if (gameState.isPlayerTurn()) {
       //generateSpeech("it is your turn, do your best hitting empty spaces");
-      // TODO: 4.4, Player's turn
+      // 4.4, Player's turn
       // Detect the 'fire' command, and register the shot if it was said
 
       var fire = userSaid(transcript,['fire']);
@@ -191,7 +197,7 @@ var processSpeech = function(transcript) {
     }
 
     else if (gameState.isCpuTurn() && gameState.waitingForPlayer()) {
-      // TODO: 4.5, CPU's turn
+      //4.5, CPU's turn
       // Detect the player's response to the CPU's shot: hit, miss, you sunk my ..., game over
       // and register the CPU's shot if it was said
       p_response = userSaid(transcript.toLowerCase(),['hit','miss','you sunk my ship','game over']);
